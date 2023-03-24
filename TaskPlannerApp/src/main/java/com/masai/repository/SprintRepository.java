@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.masai.model.Sprint;
 
 @Repository
-public interface SprintRepository extends JpaRepository<Sprint, Integer>{
+public interface SprintRepository extends JpaRepository<Sprint, Long>{
 
 }
