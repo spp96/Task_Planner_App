@@ -12,7 +12,7 @@ public interface TaskService {
 
 	public Task addTask(Task task) throws TaskException;
 	
-	public Task changeAssign(Long taskId, String newAssign) throws TaskException ;
+	public Task changeAssignee(Long taskId, String newAssign) throws TaskException ;
 	
 	public List<Task> getAllTasksAssignToUser(Long userId) throws UserException;
 	

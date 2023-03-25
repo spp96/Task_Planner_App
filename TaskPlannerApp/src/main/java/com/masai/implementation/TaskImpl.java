@@ -31,7 +31,7 @@ public class TaskImpl implements TaskService{
 	}
 
 	@Override
-	public Task changeAssign(Long taskId, String newAssign)throws TaskException  {
+	public Task changeAssignee(Long taskId, String newAssign)throws TaskException  {
 		Task task = taskRepo.findById(taskId).get();
 		task.setAssignTo(newAssign);
 		

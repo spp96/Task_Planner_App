@@ -39,7 +39,7 @@ public class TaskController {
 	@PostMapping("/{taskId}/changeAssignee")
 	public ResponseEntity<Task> changeAssigneeHandler(@PathVariable("taskId") Long taskId,@RequestParam String newAssignee ) throws TaskException{
 		
-		Task change =  taskService.changeAssign(taskId, newAssignee);
+		Task change =  taskService.changeAssignee(taskId, newAssignee);
 		
 		return new ResponseEntity<Task>(change,HttpStatus.CREATED);
 	}
