@@ -21,15 +21,15 @@ import com.masai.service.UserService;
 
 
 @RestController
-@RequestMapping("/TaskPlanner")
+@RequestMapping("/TaskPlanner/User")
 public class UserController {
 	@Autowired
-	private UserService uService;
+	private UserService userService;
 	
 	@PostMapping("/register")
 	public ResponseEntity<User> registerUserHandler(@RequestBody User user) throws UserException{
 		
-		User user1 =  uService.registerNewUser(user);
+		User user1 =  userService.registerNewUser(user);
 		
 		return new ResponseEntity<User>(user1,HttpStatus.CREATED);
 	}
@@ -37,7 +37,7 @@ public class UserController {
 	@GetMapping("/getbyId/{userId}")
 	public ResponseEntity<User> getUserByIdHandler(@PathVariable("userId") Long userId) throws UserException{
 		
-		User user1 =  uService.getUserById(userId);
+		User user1 =  userService.getUserById(userId);
 		
 		return new ResponseEntity<User>(user1,HttpStatus.ACCEPTED);
 	}
@@ -45,7 +45,7 @@ public class UserController {
 	@DeleteMapping("/deletebyId/{userId}")
 	public ResponseEntity<User> deleteUserByIdHandler(@PathVariable("userId") Long userId) throws UserException{
 		
-		User user1 =  uService.deleteUser(userId);
+		User user1 =  userService.deleteUser(userId);
 		
 		return new ResponseEntity<User>(user1,HttpStatus.ACCEPTED);
 	}
@@ -54,7 +54,7 @@ public class UserController {
 	public ResponseEntity<User> updateUserHandler(@RequestParam Long userId,@RequestParam String fname,
 			@RequestParam String lname,@RequestParam String email,@RequestParam String mobile,@RequestParam String password,@RequestParam RoleOfUser role,@RequestParam Gender gender) throws UserException {
 
-		User cust = uService.updateUser(userId, fname, lname, email, mobile, password, role, gender);
+		User cust = userService.updateUser(userId, fname, lname, email, mobile, password, role, gender);
 
 		return new ResponseEntity<User>(cust, HttpStatus.FOUND);
 	}

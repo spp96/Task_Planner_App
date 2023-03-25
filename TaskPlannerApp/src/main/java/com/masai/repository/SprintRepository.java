@@ -8,4 +8,5 @@ import com.masai.model.Sprint;
 @Repository
 public interface SprintRepository extends JpaRepository<Sprint, Long>{
 
+	public Sprint findBySprintName(String sprintName);
 }

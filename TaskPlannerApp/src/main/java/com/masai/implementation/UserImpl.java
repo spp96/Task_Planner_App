@@ -21,9 +21,9 @@ public class UserImpl implements UserService{
 
 	@Override
 	public User registerNewUser(User user) throws UserException {
-		User newUser = userRepo.findByMobileNumber(user.getMobileNumber());
+		User existingUser = userRepo.findByMobileNumber(user.getMobileNumber());
 		
-		if(newUser != null) {
+		if(existingUser != null) {
 			throw new UserException("User Already registered with this mobilenumber");
 		}
 		
@@ -44,12 +44,13 @@ public class UserImpl implements UserService{
 		User user = userRepo.findById(userId)
 	            .orElseThrow(() -> new UserException("User not found with given Id :-" + userId));
 
-	 		if (user == null)
-	 			throw new UserException("Access restricted.");
+//	 		if (user == null)
+//	 			throw new UserException("Access restricted.");
+//		
 	 		Optional<User> newUser = userRepo.findById(userId);
-
-	 		if (!newUser.isPresent())
-	 			throw new UserException("Invalid Customer Id");
+//
+//	 		if (!newUser.isPresent())
+//	 			throw new UserException("Invalid Customer Id");
 
 	 		User newUser1 = newUser.get();
 

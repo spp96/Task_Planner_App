@@ -3,6 +3,8 @@ package com.masai.model;
 import java.time.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +26,13 @@ public class Sprint {
 	
 	private String sprintName;
 	
+	private String description;
+	
 	private LocalDate startDate;
 	
 	private LocalDate endDate;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "sprint")
 	private List<Task> tasksList;
 	
