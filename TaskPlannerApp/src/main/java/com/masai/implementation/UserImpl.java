@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.masai.enums.Gender;
 import com.masai.enums.RoleOfUser;
+import com.masai.exception.TaskException;
 import com.masai.exception.UserException;
+import com.masai.model.Task;
 import com.masai.model.User;
+import com.masai.repository.TaskRepository;
 import com.masai.repository.UserRepository;
 import com.masai.service.UserService;
 
@@ -17,6 +20,9 @@ public class UserImpl implements UserService{
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private TaskRepository taskRepo;
 	
 
 	@Override
@@ -43,14 +49,8 @@ public class UserImpl implements UserService{
 		  
 		User user = userRepo.findById(userId)
 	            .orElseThrow(() -> new UserException("User not found with given Id :-" + userId));
-
-//	 		if (user == null)
-//	 			throw new UserException("Access restricted.");
-//		
+	
 	 		Optional<User> newUser = userRepo.findById(userId);
-//
-//	 		if (!newUser.isPresent())
-//	 			throw new UserException("Invalid Customer Id");
 
 	 		User newUser1 = newUser.get();
 
@@ -85,6 +85,24 @@ public class UserImpl implements UserService{
 		
 		userRepo.delete(user);
 		return user;
+	}
+
+	@Override
+	public String assignTaskToUser(Long userId, Long taskId) throws UserException, TaskException{
+		User fUser = userRepo.findById(userId).orElseThrow(() -> new UserException("User not found with given Id :" + userId));
+		
+		
+		Task fTask = taskRepo.findById(taskId).orElseThrow(() -> new TaskException("Task not added with given Id :" + taskId));
+		
+		if(fTask.getUser() != null) {
+			throw new UserException("task already assign to user with given Id :" + userId);
+		} else {
+			fTask.setUser(fUser);
+			fUser.getTasksList().add(fTask);
+			taskRepo.save(fTask);
+			userRepo.save(fUser);
+			return "Task " + taskId + ":- Assigned to user with userId " + userId;	
+		}
 	}
 
 }

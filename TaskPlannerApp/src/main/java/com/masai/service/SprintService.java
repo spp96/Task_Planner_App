@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.masai.exception.SprintException;
+import com.masai.exception.TaskException;
 import com.masai.model.*;
 
 public interface SprintService {
@@ -17,4 +18,6 @@ public interface SprintService {
 	public Sprint updateSprint(Long sprintId, String sprintName, String description, LocalDate startDate, LocalDate endDate) throws SprintException;
 	
 	public Sprint deleteSprintById (Long sprintId) throws SprintException;
+	
+	public String addTaskToSprint (Long taskId, Long sprintId) throws SprintException, TaskException;
 }

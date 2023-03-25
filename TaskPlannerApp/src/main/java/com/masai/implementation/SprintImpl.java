@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.masai.exception.SprintException;
+import com.masai.exception.TaskException;
 import com.masai.model.Sprint;
 import com.masai.model.Task;
 import com.masai.repository.SprintRepository;
+import com.masai.repository.TaskRepository;
 import com.masai.service.SprintService;
 
 @Service
@@ -17,6 +19,9 @@ public class SprintImpl implements SprintService{
 	
 	@Autowired
 	private SprintRepository sprintRepo;
+	
+	@Autowired
+	private TaskRepository taskRepo;
 
 	@Override
 	public Sprint createSprint(Sprint sprint) throws SprintException {
@@ -78,6 +83,24 @@ public class SprintImpl implements SprintService{
 		
 		sprintRepo.delete(sprint);
 		return sprint;
+	}
+
+	@Override
+	public String addTaskToSprint(Long taskId, Long sprintId) throws SprintException, TaskException {
+				
+		Task fTask = taskRepo.findById(taskId).orElseThrow(() -> new TaskException("Task not added with given Id :" + taskId));
+		
+		Sprint fSprint = sprintRepo.findById(sprintId).orElseThrow(() -> new SprintException("Sprint not found with given Id :" + sprintId));
+		
+		if(fTask.getSprint() != null) {
+			throw new SprintException("task already added in given sprint :" + sprintId);
+		} else {
+			fTask.setSprint(fSprint);
+			fSprint.getTasksList().add(fTask);
+			sprintRepo.save(fSprint);
+			taskRepo.save(fTask);
+			return "Task " + taskId + ":- added to spring having sprint " + sprintId;	
+		}
 	}
 
 }

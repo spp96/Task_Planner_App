@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.enums.Gender;
 import com.masai.enums.RoleOfUser;
+import com.masai.exception.TaskException;
 import com.masai.exception.UserException;
 import com.masai.model.User;
 import com.masai.service.UserService;
@@ -59,4 +60,11 @@ public class UserController {
 		return new ResponseEntity<User>(cust, HttpStatus.FOUND);
 	}
 	
+	@PostMapping("/assignTask/{userId}/{taskId}")
+	public ResponseEntity<String> assignTaskToUserHandler(@PathVariable("userId") Long userId, @PathVariable("taskId") Long taskId) throws UserException, TaskException {
+		
+		String result =  userService.assignTaskToUser(userId, taskId);
+		
+		return new ResponseEntity<String>(result,HttpStatus.CREATED);
+	}
 }

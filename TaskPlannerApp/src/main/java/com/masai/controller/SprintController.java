@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.SprintException;
+import com.masai.exception.TaskException;
 import com.masai.model.*;
 import com.masai.service.SprintService;
 
@@ -64,5 +65,13 @@ public class SprintController {
 		Sprint updateSprint = sprintService.updateSprint(sprintId, sprintName, description, startDate, endDate);
 
 		return new ResponseEntity<Sprint>(updateSprint, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/addTask/{taskId}/{sprintId}")
+	public ResponseEntity<String> addTaskToSprintHandler(@PathVariable("taskId") Long taskId, @PathVariable("sprintId") Long sprintId) throws SprintException, TaskException  {
+		
+		String result =  sprintService.addTaskToSprint(taskId, sprintId);
+		
+		return new ResponseEntity<String>(result,HttpStatus.CREATED);
 	}
 }
