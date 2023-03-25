@@ -1,5 +1,6 @@
 package com.masai.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.masai.enums.StatusOfTask;
 import com.masai.enums.Types;
 
@@ -36,9 +37,11 @@ public class Task {
 	private StatusOfTask status;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Sprint sprint;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "user_Id")
 	private User user;
 

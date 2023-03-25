@@ -43,7 +43,7 @@ public class SprintController {
 		return new ResponseEntity<Sprint>(getSprint,HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/sprintId/{tasks}")
+	@GetMapping("/{sprintId}/{tasks}")
 	public ResponseEntity<List<Task>> getAllTaskInSprintHandler(@PathVariable("sprintId") Long sprintId) throws SprintException{
 		
 		return new ResponseEntity<List<Task>>(sprintService.getAllTasksInSprint(sprintId),HttpStatus.ACCEPTED);
